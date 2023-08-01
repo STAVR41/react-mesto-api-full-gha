@@ -1,0 +1,12 @@
+.form__enter {
+    margin: 15px 0 0 0;
+    font-size: 14px;
+    line-height: 17px;
+    color: #fff;
+}
+
+@media (max-width:700px) {
+    .form__enter {
+        margin: 20px 0 0 0;
+    }
+}

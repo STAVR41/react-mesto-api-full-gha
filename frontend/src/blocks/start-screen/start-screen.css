@@ -1,0 +1,12 @@
+.start-screen {
+    max-width: 358px;
+    margin: 0 auto;
+    color: #fff;
+    text-align: center;
+    flex: 1 1 auto;
+}
+@media (max-width:425px) {
+    .start-screen {
+        max-width: 260px;
+    }
+}

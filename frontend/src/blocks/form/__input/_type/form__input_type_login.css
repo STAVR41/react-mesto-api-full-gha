@@ -1,0 +1,7 @@
+.form__input_type_login {
+    border-bottom: 2px solid rgb(204, 204, 204);
+    color: #fff;
+ }
+ .form__input_type_login:first-of-type {
+    margin: 0 0 30px 0;
+ }

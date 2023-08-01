@@ -1,0 +1,27 @@
+.form__save {
+  width: 100%;
+  background: #000;
+  min-height: 50px;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
+  border: none;
+  padding: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+  margin: 18px 0 0 0;
+}
+.form__save:hover {
+  opacity: 0.8;
+}
+.form__save:hover.form__save_inactive{
+ opacity: 0.2;
+}
+@media (max-width: 700px) {
+  .form__save {
+    font-size: 14px;
+    line-height: 17px;
+    min-height: 46px;
+  }
+}
