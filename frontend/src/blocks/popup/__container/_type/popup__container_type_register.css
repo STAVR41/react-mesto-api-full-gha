@@ -1,0 +1,6 @@
+@media (max-width:700px) {
+    .popup__container_type_register {
+        height: 307px;
+        padding: 50px 18px;
+    }
+}

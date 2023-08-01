@@ -1,0 +1,7 @@
+.form__save_inactive {
+  opacity: 0.2;
+  background: none;
+  color: #000;
+  border: 1px solid #000000;
+  cursor: default;
+}

@@ -1,0 +1,7 @@
+.form__enter_type_link {
+    transition: opacity 0.7s ease;
+    text-decoration: none;
+}
+.form__enter_type_link:hover {
+    opacity: 0.6;
+}

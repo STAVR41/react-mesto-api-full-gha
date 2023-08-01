@@ -1,0 +1,6 @@
+.card__text-block {
+   display: flex;
+   justify-content: space-between;
+   margin: 22px 20px 22px 21px;
+   align-items: flex-start;
+ }
