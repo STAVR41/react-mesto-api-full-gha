@@ -9,6 +9,7 @@ class Auth {
         return fetch(`${this._options.baseUrl}/signup`, {
             method: "POST",
             headers: this._options.headers,
+            credentials: 'include',
             body: JSON.stringify({
                 password: data.password,
                 email: data.email,
@@ -19,26 +20,27 @@ class Auth {
         return fetch(`${this._options.baseUrl}/signin`, {
             method: "POST",
             headers: this._options.headers,
+            credentials: 'include',
             body: JSON.stringify({
                 password: data.password,
                 email: data.email,
             })
         }).then(res => this._checkStatusServer(res))
     }
-    checkToken(token) {
+    checkToken() {
         return fetch(`${this._options.baseUrl}/users/me`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
+            },
+            credentials: 'include',
         }).then(res => this._checkStatusServer(res))
     }
 }
 const auth = new Auth({
-    baseUrl: "https://auth.nomoreparties.co",
+    baseUrl: "http://localhost:4000",
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 });
 export default auth

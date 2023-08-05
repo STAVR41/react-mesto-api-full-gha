@@ -38,6 +38,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -62,7 +63,6 @@ function App() {
   }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen])
 
   function logout() {
-    localStorage.removeItem("token")
     navigate("/sign-in")
     setLoggedIn(false)
   }
@@ -83,8 +83,7 @@ function App() {
   function authorizationUser(data) {
     auth.authorization(data)
       .then(res => {
-        if (res.token) {
-          localStorage.setItem("token", res.token);
+        if (res.login._id) {
           setLoggedIn(true)
           setEmailUser(data.email)
           navigate("/", { replace: true })
@@ -96,18 +95,18 @@ function App() {
       })
   }
   function handleTokenCheck() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      auth.checkToken(token)
-        .then(res => {
-          if (res) {
-            setEmailUser(res.data.email)
-            setLoggedIn(true)
-            navigate("/", { replace: true })
-          }
-        })
-        .catch(err => console.log(err))
-    }
+    auth.checkToken()
+      .then(res => {
+        if (res) {
+          setEmailUser(res.email)
+          setLoggedIn(true)
+          navigate("/", { replace: true })
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        setLoggedIn(false)
+      });
   }
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -133,7 +132,7 @@ function App() {
     setSelectedCard({})
   }
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     if (!isLiked) {
       api.addLike(card._id)
         .then(newCard => setCards((state) => state.map((userCard) => userCard._id === card._id ? newCard : userCard)))
@@ -163,7 +162,7 @@ function App() {
     setSubmitTextButtton("Сохранение...")
     api.setProfileUser(userInfo.name, userInfo.about)
       .then(res => {
-        setCurrentUser({ ...currentUser, name: res.name, about: res.about })
+        setCurrentUser({ ...currentUser, name: res.data.name, about: res.data.about })
         closeAllPopups()
       })
       .catch(err => console.log(`Ошибка ${err}`))
@@ -172,8 +171,8 @@ function App() {
   function handleUpdateAvatar(avatar) {
     setSubmitTextButtton("Сохранение...")
     api.setAvatarUser(avatar)
-      .then(res => {
-        setCurrentUser({ ...currentUser, avatar: res.avatar })
+      .then(() => {
+        setCurrentUser({ ...currentUser, avatar: avatar })
         closeAllPopups()
       })
       .catch(err => console.log(`Ошибка ${err}`))
@@ -205,16 +204,17 @@ function App() {
         <Route path="/react-mesto-auth/" element={loggedIn ? <Navigate to="/" replace /> : <Navigate to="/sign-in" replace />} />
         <Route path="/sign-up" element={<Register onRegisterUser={registerNewUser} />} />
         <Route path="/sign-in" element={<Login onAuthorization={authorizationUser} />} />
-        <Route path="/" element={<ProtectedRoute loggedIn={loggedIn} element={<Main
-          exitAccount={logout}
-          emailUser={emailUser}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardClick={handleCardClick}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick} />} />} />
+        <Route path="/" element={<ProtectedRoute loggedIn={loggedIn} element={
+          <Main
+            exitAccount={logout}
+            emailUser={emailUser}
+            onCardDelete={handleCardDelete}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardClick={handleCardClick}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick} />} />} />
       </Routes>
       {loggedIn && <Footer />}
       <InfoTooltip text={isTextInfoToolTip} isOpen={isInfoToolTip} onClose={closeAllPopups} />
