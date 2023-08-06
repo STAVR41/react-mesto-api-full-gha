@@ -9,6 +9,6 @@
 
 IP-адрес 51.250.22.199
 
-Frontend https://...
+Frontend https://stavr.nomoreparties.co
 
-Backend https://...
+Backend https://api.stavr.nomoreparties.co
