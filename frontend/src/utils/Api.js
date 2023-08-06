@@ -75,7 +75,7 @@ class Api {
 
 }
 const api = new Api({
-    baseUrl: 'http://localhost:4000',
+    baseUrl: "http://api.stavr.nomoreparties.co",
     headers: {
         'Content-Type': 'application/json'
     }
