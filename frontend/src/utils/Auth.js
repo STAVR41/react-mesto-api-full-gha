@@ -38,7 +38,7 @@ class Auth {
     }
 }
 const auth = new Auth({
-    baseUrl: "https://api.stavr.nomoreparties.co",
+    baseUrl: "http://api.stavr.nomoreparties.co",
     headers: {
         "Content-Type": "application/json",
     }
