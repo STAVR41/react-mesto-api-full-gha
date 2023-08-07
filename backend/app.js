@@ -17,12 +17,18 @@ const { PORT = 4000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.en
 mongoose.connect(DB_URL);
 
 const app = express();
-app.use(cors({ origin: ['http://localhost:3000', 'https://stavr.nomoreparties.co', 'http://stavr.nomoreparties.co'], credentials: true }));
+app.use(cors({ origin: ['https://stavr.nomoreparties.co', 'http://stavr.nomoreparties.co'], credentials: true }));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', validateLoginUser, authentication);
 app.post('/signup', validateCreateUser, createUser);
