@@ -47,7 +47,7 @@ function updateAvatar(req, res, next) {
 }
 function logout(req, res) {
   res.clearCookie('jwt');
-  res.send({ message: 'Куки удалены' });
+  res.send({ message: 'Cookie delete' });
 }
 
 module.exports = {

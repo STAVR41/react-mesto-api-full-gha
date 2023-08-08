@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { authentication } = require('./controllers/login');
@@ -24,13 +27,14 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(requestLogger);
+const limiter = rateLimit({ windowMs: 10 * 60 * 1000, max: 100 });
 
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-
+app.use(limiter);
 app.post('/signin', validateLoginUser, authentication);
 app.post('/signup', validateCreateUser, createUser);
 app.use(auth);
