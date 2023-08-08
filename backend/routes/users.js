@@ -10,8 +10,10 @@ const {
   updateProfile,
   updateAvatar,
   getCurrentUser,
+  logout,
 } = require('../controllers/users');
 
+router.get('/signout', logout);
 router.get('/', getUsers);
 router.get('/me', getCurrentUser);
 router.get('/:id', validateId, getUserById);

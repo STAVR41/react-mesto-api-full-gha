@@ -45,6 +45,10 @@ function updateAvatar(req, res, next) {
       return next(err);
     });
 }
+function logout(req, res) {
+  res.clearCookie('jwt');
+  res.send({ message: 'Куки удалены' });
+}
 
 module.exports = {
   getUsers,
@@ -52,4 +56,5 @@ module.exports = {
   updateProfile,
   updateAvatar,
   getCurrentUser,
+  logout,
 };

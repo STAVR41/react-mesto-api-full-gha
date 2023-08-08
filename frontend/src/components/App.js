@@ -15,8 +15,6 @@ import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 import auth from "../utils/Auth";
 
-
-
 function App() {
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
@@ -63,8 +61,12 @@ function App() {
   }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen])
 
   function logout() {
-    navigate("/sign-in")
-    setLoggedIn(false)
+    auth.clearCookie()
+      .then(() => {
+        navigate("/sign-in")
+        setLoggedIn(false)
+      })
+      .catch(err => console.log(err))
   }
   function registerNewUser(data) {
     auth.register(data)
